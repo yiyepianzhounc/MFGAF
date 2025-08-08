@@ -13,7 +13,7 @@ This study utilizes the public benchmark dataset released with the paper:
 
 > **Raidar: GeneRative AI Detection viA Rewriting**
 >
-> Chengzhi Mao, Carl Vondrick, and Junfeng Yang. In *ICLR 2024*.
+> Chengzhi Mao, Carl Vondrick, Hao Wang, and Junfeng Yang. In *ICLR 2024*.
 
 We sincerely thank the authors of Raidar for making their data publicly available.
 
@@ -24,18 +24,23 @@ As we use an existing dataset, all details regarding data collection and annotat
 #### Data Usage
 
 To use the dataset for this project, please follow these steps:
-1.  Visit the official Raidar repository: [https://github.com/chengzhi-mao/Raidar](https://github.com/chengzhi-mao/Raidar)
+1.  Visit the official Raidar repository: [https://github.com/cvlab-columbia/RaidarLLMDetect](https://github.com/cvlab-columbia/RaidarLLMDetect)
 2.  Follow their instructions to download the dataset.
-3.  Place the downloaded data files into the `data/` directory of this project.
+3.  Place the downloaded data files into the directory of this project.
 
 #### Data Sample
 
-A typical data entry from the dataset is structured as a JSON object, containing both a human-written text and its corresponding machine-generated version. For example:
+A typical data entry from the dataset is a JSON object containing a question and various corresponding human- and machine-generated texts. The structure of our project's preprocessed data is as follows:
 
 ```json
 {
-  "domain": "News",
-  "human_text": "The prime minister announced new environmental policies today, focusing on renewable energy...",
-  "machine_text": "New environmental regulations centered on renewable energy sources were unveiled by the prime minister today...",
-  "label": 1 // 0 for human, 1 for machine
+  "question": "Where can I lookup accurate current exchange rates for consumers?",
+  "human_answers": "Current and past FX rates are available on Visa's website...",
+  "chatgpt_answers": "There are several websites and resources that provide accurate and current exchange rates...",
+  "human_answers_masked": "[MASK] Note that it may vary by country...",
+  "chatgpt_answers_masked": "[MASK] [MASK] You can typically find this information...",
+  "human_answers_masked_fill": "You can lookup accurate current exchange rates for consumers on financial news websites...",
+  "chatgpt_answers_masked_fill": "Here is the filled text:\n\nYou can typically find this information...",
+  "human_answers_revised": "\n\nVisa's website provides both current and past FX rates...",
+  "chatgpt_answers_revised": "\n\nConsumers have access to various websites and resources..."
 }
