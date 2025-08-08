@@ -1,29 +1,41 @@
-# Beat LLMs at Their Own Game: Zero-Shot LLM-Generated Text Detection via Querying ChatGPT
-## Data
-* For the Finance dataset, we use the ChatGPT-generated texts collected by Guo et al. [1]
-* The human-written texts and ChatGPT-generated texts of the Finance dataset are in the finance.jsonl file.
-* The ChatGPT-revised version for human-written texts of the Finance dataset is in the revised_human_finance.txt file.
-* The ChatGPT-revised version for ChatGPT-generated texts of the Finance dataset is in the revised_chatgpt_finance.txt file.
-* When we revise texts with ChatGPT, we use the
-gpt-3.5-turbo API provided by OpenAI. All experiments that call gpt-3.5-turbo API in
-the paper are done before June 2023, with the gpt-3.5-turbo API being gpt-3.5-turbo-0301.
-## Code
-* To evaluate the detection performance of our method on the Finance dataset, please run the code "python finance_bart_auroc.py".
-  
-  We use the BARTScore-CNN [2] as
-the similarity metric to calculate similarity scores.
+# MFGAF: Multi-faceted Granular Analysis Framework for LLM-Generated Text Detection
 
+This repository contains the official implementation for the paper: **"MFGAF: Multi-faceted Granular Analysis Framework for LLM-Generated Text Detection"**.
 
+Our framework introduces a novel zero-shot approach for detecting LLM-generated text by leveraging dual perspectives (Rewriting and Completion) and a multi-granular textual analysis across semantic, syntactic, lexical, and reasoning dimensions.
 
+<!-- You can add your framework diagram here -->
+<!-- ![Framework Overview](framework_diagram.png) -->
 
+## 1. Dataset
 
- ## Reference
-[1] Biyang Guo, Xin Zhang, Ziyuan Wang, Minqi Jiang,
-Jinran Nie, Yuxuan Ding, Jianwei Yue, and Yupeng
-Wu. 2023. How close is chatgpt to human experts?
-comparison corpus, evaluation, and detection. arXiv
-preprint arXiv:2301.07597.
+This study utilizes the public benchmark dataset released with the paper:
 
-[2] Weizhe Yuan, Graham Neubig, and Pengfei Liu. 2021.
-Bartscore: Evaluating generated text as text generation. In Advances in Neural Information Processing
-Systems, volume 34, pages 27263–27277. Curran Associates, Inc.
+> **Raidar: GeneRative AI Detection viA Rewriting**
+>
+> Chengzhi Mao, Carl Vondrick, and Junfeng Yang. In *ICLR 2024*.
+
+We sincerely thank the authors of Raidar for making their data publicly available.
+
+#### Data Collection and Annotation
+
+As we use an existing dataset, all details regarding data collection and annotation can be found in the original Raidar paper. The dataset covers six domains: News, Creative Writing, Student Essays, Code, Reviews, and Abstracts. The texts were generated using models like GPT-3.5-turbo and GPT-4.
+
+#### Data Usage
+
+To use the dataset for this project, please follow these steps:
+1.  Visit the official Raidar repository: [https://github.com/chengzhi-mao/Raidar](https://github.com/chengzhi-mao/Raidar)
+2.  Follow their instructions to download the dataset.
+3.  Place the downloaded data files into the `data/` directory of this project.
+
+#### Data Sample
+
+A typical data entry from the dataset is structured as a JSON object, containing both a human-written text and its corresponding machine-generated version. For example:
+
+```json
+{
+  "domain": "News",
+  "human_text": "The prime minister announced new environmental policies today, focusing on renewable energy...",
+  "machine_text": "New environmental regulations centered on renewable energy sources were unveiled by the prime minister today...",
+  "label": 1 // 0 for human, 1 for machine
+}
